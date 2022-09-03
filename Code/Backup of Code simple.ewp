@@ -757,7 +757,7 @@
                 </option>
                 <option>
                     <name>OutputFile</name>
-                    <state>Project 10 simple.d43</state>
+                    <state>Code simple.d43</state>
                 </option>
                 <option>
                     <name>OutputFormat</name>
@@ -951,7 +951,7 @@
                 </option>
                 <option>
                     <name>ExtraOutputFile</name>
-                    <state>Project 10 simple.a43</state>
+                    <state>Code simple.a43</state>
                 </option>
                 <option>
                     <name>ExtraOutputFormat</name>
