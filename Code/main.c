@@ -29,6 +29,10 @@ void main(void);
 
 // Global Variables
 // Global Variables
+extern volatile unsigned int Time_Sequence;
+extern volatile unsigned int Last_Time_Sequence;
+extern unsigned volatile int time_change, stopwatch_milliseconds;
+extern volatile unsigned int cycle_count,stopwatch_seconds;
 volatile char slow_input_down;
 extern char display_line[4][11];
 extern char *display[4];
@@ -101,7 +105,19 @@ void main(void) {
         
         Display_Process();
         MotorSafety();
+        
+        
         P3OUT ^= TEST_PROBE;               // Change State of TEST_PROBE OFF
+        
+         if(Last_Time_Sequence != Time_Sequence) {
+            Last_Time_Sequence = Time_Sequence;
+            time_change = 1;
+
+            if(++cycle_count == TIME_SEQUENCE_MAX) {
+                cycle_count = 0;
+                stopwatch_seconds++;
+            }
+        }
     }
 
     //------------------------------------------------------------------------------

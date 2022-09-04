@@ -27,7 +27,7 @@ extern int rightVals[VALUES_TO_HOLD];
 
 PIDController rightFollowController = {
     .kP = 6,// /16
-    .kD = 5000,// /8
+    .kD = 2000,// /8
     //.kI = 0,
     .error = 0,
     .lastError = 0
@@ -134,5 +134,29 @@ int Drive_Path(int speedR, int speedL, unsigned int duration) {
     RunRightMotor(speedR);
     RunLeftMotor(speedL);
 
+    if(duration == 0) return 0;
+
+    if (time_change) {
+        time_change = 0;
+
+        if (/*success && */Update_Ticks(duration)) {
+            ShutoffMotors();
+            return 1;
+        }
+    }
+
+    return 0;
+
 }
 
+
+int Update_Ticks(int milliseconds) { // each tick is 4ms
+    stopwatch_milliseconds += MS_PER_TICK;
+
+    if(stopwatch_milliseconds >= milliseconds) {
+        stopwatch_milliseconds = 0;
+        return 1;
+    }
+
+    return 0;
+}

@@ -64,7 +64,7 @@ void LineFollow(char direction)
     case 1:
         if (ADC_Left_Detect <= LEFT_WHITE_DETECT && ADC_Right_Detect <= RIGHT_WHITE_DETECT)
         {
-            stateCounter = 2;
+            stateCounter = 10;
             break;
         }
         if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT)||(ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
@@ -80,7 +80,7 @@ void LineFollow(char direction)
             lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2500, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect)); // swapped b/c they are physically swapped
         }
 
-        if (rFollowSpeed >= 8500 && lFollowSpeed >= 8500)
+        if (rFollowSpeed >= 5000 && lFollowSpeed >= 5000)
             rFollowSpeed = lFollowSpeed = 3000;
         
         HEXtoBCD(rFollowSpeed/100, 2, 6);
@@ -100,6 +100,9 @@ void LineFollow(char direction)
         ClearPIDController(&leftFollowController);
         ClearPIDController(&leftFollowController);
         break;
+    case 10:
+      if(LockMotors(-1,-1)) stateCounter = 2;
+      break;
     case 3:
         ShutoffMotors();
         stateCounter = 0;

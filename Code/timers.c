@@ -6,6 +6,10 @@
 #include "sm.h"
 
 volatile unsigned int Time_Sequence;
+volatile unsigned int Last_Time_Sequence;
+volatile unsigned int cycle_count,stopwatch_seconds;
+volatile unsigned int stopwatch_milliseconds;
+volatile unsigned int time_change;
 extern volatile unsigned char update_display;
 volatile unsigned long timer0Counter;
 volatile unsigned int backliteCounter;
@@ -192,7 +196,7 @@ __interrupt void TIMER0_B1_ISR(void) {
 }
 
 #pragma vector = TIMER1_B0_VECTOR
-__interrupt void Timer1_B0_ISR(void) {
+__interrupt void Timer1_B0_ISR(void) {  
     //------------------------------------------------------------------------------
     // TimerB0 0 Interrupt handler
     //----------------------------------------------------------------------------
