@@ -23,8 +23,8 @@
 // turn
 #define TURN90                  (460)
 // detectors
-#define LEFT_BLACK_DETECT       (13)
-#define RIGHT_BLACK_DETECT      (13)
+#define LEFT_BLACK_DETECT       (30)
+#define RIGHT_BLACK_DETECT      (30)
 #define LEFT_GRAY_DETECT        (10)
 #define RIGHT_GRAY_DETECT       (10)
 #define LEFT_WHITE_DETECT       (4)//(LWDetect+2)

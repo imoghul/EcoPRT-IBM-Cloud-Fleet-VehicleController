@@ -48,6 +48,10 @@ void LineFollow(char direction)
     {
     case 0:
         EMITTER_ON;
+        strcpy(display_line[0], "          ");
+        strcpy(display_line[1], "          ");
+        strcpy(display_line[2], "          ");
+        strcpy(display_line[3], "          ");
         display_changed = 1;
 
         if (rightSwitchable && leftSwitchable)
@@ -63,7 +67,7 @@ void LineFollow(char direction)
             stateCounter = 2;
             break;
         }
-        if ((ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT)||(ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT))
+        if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT)||(ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
         {
             rFollowSpeed = lFollowSpeed = 3000;
             ClearPIDController(&leftFollowController);
@@ -71,21 +75,24 @@ void LineFollow(char direction)
         }
         else
         {
-            rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2000, GetOutput(&leftFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
+            rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2500, GetOutput(&leftFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
 
-            lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2000, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect)); // swapped b/c they are physically swapped
+            lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2500, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect)); // swapped b/c they are physically swapped
         }
 
         if (rFollowSpeed >= 8500 && lFollowSpeed >= 8500)
             rFollowSpeed = lFollowSpeed = 3000;
         
-
+        HEXtoBCD(rFollowSpeed/100, 2, 6);
+        HEXtoBCD(lFollowSpeed/100, 2, 0);
         Drive_Path(rFollowSpeed, lFollowSpeed, 0);
 
         break;
 
     case 2:
         rFollowSpeed = lFollowSpeed = -3800;
+        HEXtoBCD(rFollowSpeed/100, 2, 6);
+        HEXtoBCD(lFollowSpeed/100, 2, 0);
         Drive_Path(rFollowSpeed, lFollowSpeed, 0);
         if (ADC_Left_Detect > LEFT_WHITE_DETECT && ADC_Right_Detect > RIGHT_WHITE_DETECT)
             stateCounter = 1;
@@ -100,6 +107,7 @@ void LineFollow(char direction)
         EMITTER_OFF;
         break;
     }
+    
 }
 
 void StateMachine(void)
