@@ -27,23 +27,6 @@
 #define CARET_SECURITY_CODE             ("^9A73")
 #define CARET_SECURITY_CODE_LEN         (5)
 
-#define COMMAND_BUFFER_LEN              (5)
-
-#define FORWARD_COMMAND                 ('f')
-#define REVERSE_COMMAND                 ('b')
-#define RIGHT_COMMAND                   ('r')
-#define LEFT_COMMAND                    ('l')
-#define STOP_COMMAND                    ('s')
-#define LINEFOLLOW_COMMAND              ('o')
-#define DISPLAY_NUMBER_COMMAND          ('d')
-#define EXIT_COMMAND                    ('e')
-#define TURN_CONSTANT                   (3)
-
-typedef struct {
-    char comm;
-    unsigned int duration;
-} command;
-
 int Init_IOT(void);
 void waitForReady(void);
 void SendIOTCommand(char* command, char nextState);
@@ -51,8 +34,5 @@ void getSSID(void);
 void getIP(void);
 void centerStringToDisplay(unsigned int line, char * s);
 void IOTBufferCommands(void);
-void ProcessCommands(void);
-void pushCB(command c);
 void displayNetworkInfo(void);
 void displayIP(int);
-command popCB(void);

@@ -23,12 +23,12 @@
 // turn
 #define TURN90                  (460)
 // detectors
-#define LEFT_BLACK_DETECT       (LBDetect)
-#define RIGHT_BLACK_DETECT      (RBDetect)
-#define LEFT_GRAY_DETECT        (LBDetect-5)
-#define RIGHT_GRAY_DETECT       (RBDetect-5)
-#define LEFT_WHITE_DETECT       (9)//(LWDetect+2)
-#define RIGHT_WHITE_DETECT      (9)//(RWDetect+2)
+#define LEFT_BLACK_DETECT       (13)
+#define RIGHT_BLACK_DETECT      (13)
+#define LEFT_GRAY_DETECT        (8)
+#define RIGHT_GRAY_DETECT       (8)
+#define LEFT_WHITE_DETECT       (4)//(LWDetect+2)
+#define RIGHT_WHITE_DETECT      (4)//(RWDetect+2)
 #define MS_PER_TICK             (4)
 #define LOCK_TIME               (150)
 
@@ -37,7 +37,7 @@ int RunLeftMotor( int val);
 int Update_Ticks(int);
 //int Drive_Path_Definite(int speedR, int speedL, unsigned int ticksDuration) ;
 //int Drive_Path_Indefinite(int speedR, int speedL);
-int Drive_Path(int speedR, int speedL, unsigned int ticksDuration);
+int Drive_Path(int speedR, int speedL, unsigned int duration);
 int delay(int seconds, int cycles);
 void ShutoffMotors(void);
 void ShutoffRight(void);

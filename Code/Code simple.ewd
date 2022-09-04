@@ -12,7 +12,7 @@
             <archiveVersion>5</archiveVersion>
             <data>
                 <version>27</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>CInput</name>
@@ -56,7 +56,7 @@
                 </option>
                 <option>
                     <name>DdfFileName</name>
-                    <state>$TOOCodeKIT_DIR$\config\debugger\msp430fr2355.ddf</state>
+                    <state>$TOOLKIT_DIR$\config\debugger\msp430fr2355.ddf</state>
                 </option>
                 <option>
                     <name>ProcTMS</name>
@@ -111,7 +111,7 @@
                     <state>1</state>
                 </option>
                 <option>
-                    <name>Code092Mode</name>
+                    <name>L092Mode</name>
                     <state>1</state>
                 </option>
                 <option>
@@ -153,7 +153,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <version>33</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>CFetMandatory</name>
@@ -161,11 +161,11 @@
                 </option>
                 <option>
                     <name>Erase</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>EMUVerifyDownloadP7</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>EraseOptionSlaveP7</name>
@@ -197,7 +197,7 @@
                     <state>3.3</state>
                 </option>
                 <option>
-                    <name>AllowCodeockedFlashAccessP7</name>
+                    <name>AllowLockedFlashAccessP7</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -209,7 +209,7 @@
                     <state>1</state>
                 </option>
                 <option>
-                    <name>EEMCodeevel</name>
+                    <name>EEMLevel</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -217,7 +217,7 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>NeedCodeockedFlashAccess</name>
+                    <name>NeedLockedFlashAccess</name>
                     <state>1</state>
                 </option>
                 <option>
@@ -231,18 +231,18 @@
                 </option>
                 <option>
                     <name>SoftwareBreakpointEnable</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>RadioSoftwareBreakpointType</name>
-                    <state>0</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>TargetSettlingtime</name>
                     <state>0</state>
                 </option>
                 <option>
-                    <name>AllowAccessToBSCode</name>
+                    <name>AllowAccessToBSL</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -258,11 +258,11 @@
                     <state></state>
                 </option>
                 <option>
-                    <name>DebugCodePM5</name>
+                    <name>DebugLPM5</name>
                     <state>0</state>
                 </option>
                 <option>
-                    <name>CodePM5Slave</name>
+                    <name>LPM5Slave</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -287,7 +287,7 @@
                 </option>
                 <option>
                     <name>RadioJtagSpeedType</name>
-                    <state>2</state>
+                    <state>1</state>
                 </option>
                 <option>
                     <name>memoryTypeSlave</name>
@@ -306,7 +306,7 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>cycleCounterCodeevel</name>
+                    <name>cycleCounterLevel</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -314,11 +314,11 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>CCCodeockDevice</name>
+                    <name>CCLockDevice</name>
                     <state>0</state>
                 </option>
                 <option>
-                    <name>RetainTCodeV</name>
+                    <name>RetainTLV</name>
                     <state>1</state>
                 </option>
             </data>
@@ -328,7 +328,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <version>5</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>1</debug>
                 <option>
                     <name>SimOddAddressCheckP7</name>
@@ -346,39 +346,27 @@
         </settings>
         <debuggerPlugins>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\CMX\CmxPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\CMX\CmxTinyPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-286-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\TI-RTOS\tirtosplugin.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-286-KA-CSpy.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-KA-CSpy.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-III\uCOS-III-KA-CSpy.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-III\uCOS-III-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
@@ -406,7 +394,7 @@
             <archiveVersion>5</archiveVersion>
             <data>
                 <version>27</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
                     <name>CInput</name>
@@ -505,7 +493,7 @@
                     <state>1</state>
                 </option>
                 <option>
-                    <name>Code092Mode</name>
+                    <name>L092Mode</name>
                     <state>1</state>
                 </option>
                 <option>
@@ -547,7 +535,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <version>33</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
                     <name>CFetMandatory</name>
@@ -555,7 +543,7 @@
                 </option>
                 <option>
                     <name>Erase</name>
-                    <state>1</state>
+                    <state>0</state>
                 </option>
                 <option>
                     <name>EMUVerifyDownloadP7</name>
@@ -591,7 +579,7 @@
                     <state>###Uninitialized###</state>
                 </option>
                 <option>
-                    <name>AllowCodeockedFlashAccessP7</name>
+                    <name>AllowLockedFlashAccessP7</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -603,7 +591,7 @@
                     <state>1</state>
                 </option>
                 <option>
-                    <name>EEMCodeevel</name>
+                    <name>EEMLevel</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -611,7 +599,7 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>NeedCodeockedFlashAccess</name>
+                    <name>NeedLockedFlashAccess</name>
                     <state>1</state>
                 </option>
                 <option>
@@ -636,7 +624,7 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>AllowAccessToBSCode</name>
+                    <name>AllowAccessToBSL</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -652,11 +640,11 @@
                     <state>###Uninitialized###</state>
                 </option>
                 <option>
-                    <name>DebugCodePM5</name>
+                    <name>DebugLPM5</name>
                     <state>0</state>
                 </option>
                 <option>
-                    <name>CodePM5Slave</name>
+                    <name>LPM5Slave</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -700,7 +688,7 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>cycleCounterCodeevel</name>
+                    <name>cycleCounterLevel</name>
                     <state>0</state>
                 </option>
                 <option>
@@ -708,11 +696,11 @@
                     <state>0</state>
                 </option>
                 <option>
-                    <name>CCCodeockDevice</name>
+                    <name>CCLockDevice</name>
                     <state>0</state>
                 </option>
                 <option>
-                    <name>RetainTCodeV</name>
+                    <name>RetainTLV</name>
                     <state>1</state>
                 </option>
             </data>
@@ -722,7 +710,7 @@
             <archiveVersion>1</archiveVersion>
             <data>
                 <version>5</version>
-                <wantNonCodeocal>1</wantNonCodeocal>
+                <wantNonLocal>1</wantNonLocal>
                 <debug>0</debug>
                 <option>
                     <name>SimOddAddressCheckP7</name>
@@ -740,39 +728,27 @@
         </settings>
         <debuggerPlugins>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\CMX\CmxPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\CMX\CmxTinyPlugin.ENU.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\embOS\embOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\OpenRTOS\OpenRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-286-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\SafeRTOS\SafeRTOSPlugin.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\TI-RTOS\tirtosplugin.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-286-KA-CSpy.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-II\uCOS-II-KA-CSpy.ewplugin</file>
-                <loadFlag>0</loadFlag>
-            </plugin>
-            <plugin>
-                <file>$TOOCodeKIT_DIR$\plugins\rtos\uCOS-III\uCOS-III-KA-CSpy.ewplugin</file>
+                <file>$TOOLKIT_DIR$\plugins\rtos\uCOS-III\uCOS-III-KA-CSpy.ewplugin</file>
                 <loadFlag>0</loadFlag>
             </plugin>
             <plugin>

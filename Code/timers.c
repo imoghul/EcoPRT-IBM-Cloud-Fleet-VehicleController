@@ -198,15 +198,6 @@ __interrupt void Timer1_B0_ISR(void) {
     //----------------------------------------------------------------------------
     P3OUT |= IOT_EN_CPU;
 
-    if(commandsReceieved && state != DONE) {
-        stopwatchUpdated = 1;
-        timeElapsedMilliseconds+=2;
-        if(timeElapsedMilliseconds>=10){
-          timeElapsedMilliseconds = 0;
-          timeElapsedSeconds++;
-        }
-    }
-
     if(pingCounter++>=PING_COUNT_MAX){
       pingCounter = 0;
       pingFlag = 1;

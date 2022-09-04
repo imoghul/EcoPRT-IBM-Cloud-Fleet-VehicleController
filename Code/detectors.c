@@ -4,6 +4,7 @@
 #include "wheels.h"
 #include <string.h>
 #include "sm.h"
+#include "utils.h"
 #include "detectors.h"
 extern volatile unsigned char display_changed;
 extern char display_line[4][11];
@@ -50,19 +51,19 @@ void updateDetectors(void) {
 }
 
 void calibrate(void) {
-    unsigned int left = ADC_Left_Detect, right = ADC_Right_Detect;
-    int * leftDetect = calibrationMode ? &LWDetect : &LBDetect;
-    int * rightDetect = calibrationMode ? &RWDetect : &RBDetect;
+    int left = ADC_Left_Detect, right = ADC_Right_Detect;
+    unsigned int * leftDetect = calibrationMode ? &LWDetect : &LBDetect;
+    unsigned int * rightDetect = calibrationMode ? &RWDetect : &RBDetect;
 
     if (left > *leftDetect) *leftDetect = left;
 
     if (right > *rightDetect) *rightDetect = right;
 
-    HEXtoBCD((int)LBDetect, 3, 6);
-    HEXtoBCD((int)RBDetect, 3, 0);
-    HEXtoBCD((int)LWDetect, 2, 6);
-    HEXtoBCD((int)RWDetect, 2, 0);
-    HEXtoBCD((int)left, 0, 6);
-    HEXtoBCD((int)right, 0, 0);
+    HEXtoBCD((int)LBDetect, (int)3, (int)6);
+    HEXtoBCD((int)RBDetect, (int)3, (int)0);
+    HEXtoBCD((int)LWDetect, (int)2, (int)6);
+    HEXtoBCD((int)RWDetect, (int)2, (int)0);
+    HEXtoBCD((int)left, (int)0, (int)6);
+    HEXtoBCD((int)right, (int)0, (int)0);
     display_changed = 1;
 }

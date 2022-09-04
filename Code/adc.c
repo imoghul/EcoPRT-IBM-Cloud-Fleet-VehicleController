@@ -71,11 +71,8 @@ void Init_DAC(void) {
     DAC_data = 1000;
     SAC3DAT = DAC_data;
     /*SAC3DAC = DACSREF_1 | DACLSEL_0 | DACEN;
-
     SAC3OA = NMUXEN | PMUXEN | PSEL_1 | NSEL_1 | OAPM;
-
     SAC3PGA = MSEL_1;
-
     SAC3OA = SACEN | OAEN;*/
     SAC3DAC = DACSREF_1;
     SAC3DAC |= DACLSEL_0;
@@ -134,7 +131,6 @@ __interrupt void ADC_ISR(void) {
                     //ADC_Vbat = ADC_Vbat;
                     ADCCTL0 |= ADCSC;
                     break;
-
                 case 0x02:
                     ADCMCTL0 &= ~ADCINCH_10;
                     ADCMCTL0 = ADCINCH_11;
@@ -142,7 +138,6 @@ __interrupt void ADC_ISR(void) {
                     //ADC_Vdac = ADC_Vdac;
                     ADCCTL0 |= ADCSC;
                     break;
-
                 case 0x03:
                     ADCMCTL0 &= ~ADCINCH_11;
                     ADCMCTL0 = ADCINCH_2;
@@ -155,7 +150,7 @@ __interrupt void ADC_ISR(void) {
                     ADCMCTL0 &= ~ADCINCH_2;
                     ADCMCTL0 = ADCINCH_3;
                     ADC_Left_Detect = ADCMEM0;
-                    ADC_Left_Detect = ADC_Left_Detect >> 3;
+                    ADC_Left_Detect = ADC_Left_Detect >> 4;
                     ADCCTL0 |= ADCSC;
                     break;
 
@@ -163,7 +158,7 @@ __interrupt void ADC_ISR(void) {
                     ADCMCTL0 &= ~ADCINCH_3;
                     ADCMCTL0 = ADCINCH_5;
                     ADC_Right_Detect = ADCMEM0;
-                    ADC_Right_Detect = ADC_Right_Detect >> 3;
+                    ADC_Right_Detect = ADC_Right_Detect >> 4;
                     break;
 
                 case 0x03:
@@ -181,4 +176,3 @@ __interrupt void ADC_ISR(void) {
             break;
     }
 }
-

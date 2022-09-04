@@ -7,7 +7,7 @@ struct PID {
 typedef struct PID PIDController;
 
 int GetOutput(PIDController* pidController, int setPoint, int current);
-void ClearController(PIDController* pidController);
+void ClearPIDController(PIDController* pidController);
 
 int additionSafe( int pin,  int max,  int min, int increment);
 int multSafe(int a, int b);

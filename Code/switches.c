@@ -5,9 +5,7 @@
 #include "macros.h"
 #include "sm.h"
 #include "timers.h"
-#include "detectors.h"
 #include "serial.h"
-#include "menu.h"
 #include <string.h>
 
 volatile unsigned int sw1Okay, sw2Okay;
@@ -52,10 +50,9 @@ __interrupt void switchP4_interrupt(void) {
         TB0CCR1 = TB0R + TB0CCR1_INTERVAL;
         TB0CCTL1 |= CCIE;
         debouncing1 = TRUE;
-
-        // Actual Code
-
-        transMenu = 1;//trainsitionMenu();
+        
+        // Code 
+        state = LINEFOLLOW;
     }
 }
 
@@ -83,8 +80,10 @@ __interrupt void switchP2_interrupt(void) {
         TB0CCR2 = TB0R + TB0CCR2_INTERVAL;
         TB0CCTL2 |= CCIE;
         debouncing2 = TRUE;
-        // Actual Code
-        interractMenu = 1;
+        
+        // Code
+        
+        state = START;
     }
 }
 

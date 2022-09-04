@@ -1,7 +1,6 @@
 #include "iot.h"
 #include "msp430.h"
 #include "utils.h"
-#include "menu.h"
 #include <string.h>
 #include "wheels.h"
 #include "utils.h"
@@ -20,27 +19,8 @@ extern volatile unsigned char display_changed;
 extern char display_line[4][11];
 char dotFound;
 int midIndex;
-command CommandBuffer[COMMAND_BUFFER_LEN];
-char cb_index;
 extern volatile int stateCounter;
-char commandsReceieved;
-char currentStation;
-extern int commandDisplayCounter;
-extern volatile unsigned int cycle_count;
-extern volatile unsigned int stopwatch_milliseconds;
-extern volatile unsigned int stopwatch_seconds;
-
-extern volatile char state;
-extern volatile int stateCounter, driveStateCounter;
-extern volatile char nextState;
-
-extern int speedRight, speedLeft;
-extern unsigned int driveTime;
-
 extern volatile char pingFlag;
-
-command emptyCommand = {0, 0};
-command currCommand;
 
 
 int Init_IOT(void) {
@@ -118,7 +98,7 @@ int Init_IOT(void) {
 
 void waitForReady(void) {
     if(pb0_buffered) {
-        if(strcmp((char*)USB0_Char_Rx_Process, BOOT_RESPONSE)==0) iot_setup_state = CIPMUX_Tx;
+        if(strcmp((char*)USB0_Char_Rx_Process, BOOT_RESPONSE) == 0) iot_setup_state = CIPMUX_Tx;
 
         clearProcessBuff_0();
     }
@@ -178,8 +158,8 @@ void displayNetworkInfo(void) {
 }
 
 void displayIP(int pos) {
-    strcpy(display_line[pos],"          ");
-    strcpy(display_line[pos+1],"          ");
+    strcpy(display_line[pos], "          ");
+    strcpy(display_line[pos + 1], "          ");
     centerStringToDisplay(pos, IP);
     centerStringToDisplay(pos + 1, IP + midIndex + 1);
 }
@@ -190,127 +170,7 @@ void IOTBufferCommands(void) {
         if(subStringPos((char*)USB0_Char_Rx_Process, DISCONNECTED_RESPONSE))
             iot_setup_state = CIPSERVER_Tx;
 
-        char * pos = subStringPos((char*)USB0_Char_Rx_Process, CARET_SECURITY_CODE);
-
-        while(pos) {
-            pos += CARET_SECURITY_CODE_LEN; // now should be on where the command actually is
-            char comm = *pos;
-            pos++;
-            char * end_caret = charInString(pos, '^');
-            char * end_null = charInString(pos, '\r');
-            char * end = end_caret ? end_caret : end_null;
-            int time = stoi(pos, end - pos);
-            command c = {
-                .comm = comm,
-                .duration = time
-            };
-            pushCB(c);
-            pos = subStringPos(pos, CARET_SECURITY_CODE);
-        }
-
         clearProcessBuff_0();
-    }
-
-}
-
-command popCB(void) {
-    command ret = CommandBuffer[0];
-
-    for(int i = 0; i < COMMAND_BUFFER_LEN - 1; ++i) CommandBuffer[i] = CommandBuffer[i + 1];
-
-    CommandBuffer[COMMAND_BUFFER_LEN - 1] = emptyCommand;
-    return ret;
-}
-void pushCB(command c) {
-    int i;
-
-    for(i = 0; i < COMMAND_BUFFER_LEN; ++i)
-        if(CommandBuffer[i].comm == 0 && CommandBuffer[i].duration == 0) break;
-
-    if(i == COMMAND_BUFFER_LEN) {
-        return;
-    }
-
-    CommandBuffer[i] = c;
-}
-
-void ProcessCommands(void) {
-    //if(currCommand.comm == 0 && currCommand.duration == 0)return;
-    //commandsReceieved = 1;
-    if (CommandBuffer[0].comm == STOP_COMMAND) {
-        currCommand = popCB();
-        state = START;
-        stopwatch_milliseconds = 0;
-        stateCounter = 0 ;
-        driveStateCounter = 0;
-        ShutoffMotors();
-        return;
-    }
-
-    if (CommandBuffer[0].comm == EXIT_COMMAND) {
-        state = START;
-        stopwatch_milliseconds = 0;
-        stateCounter = 0 ;
-        driveStateCounter = 0;
-        ShutoffMotors();
-    }
-
-    if(state == START) {
-        currCommand = popCB();
-
-        if(currCommand.comm == 0 && currCommand.duration == 0)return;
-
-        commandsReceieved = 1;
-        stopwatch_seconds = 0;
-        cycle_count = 0;
-
-        //driveTime = (int)(currCommand.duration * (currCommand.comm == RIGHT_COMMAND || currCommand.comm == LEFT_COMMAND ? TURN_CONSTANT : 1));
-
-        switch(currCommand.comm) {
-            case (FORWARD_COMMAND):
-                speedRight = STRAIGHT_RIGHT;
-                speedLeft = STRAIGHT_LEFT;
-                state = DRIVE;
-                driveTime = currCommand.duration;
-                break;
-
-            case (REVERSE_COMMAND):
-                speedRight = -STRAIGHT_RIGHT;
-                speedLeft = -STRAIGHT_LEFT;
-                state = DRIVE;
-                driveTime = currCommand.duration;
-                break;
-
-            case (RIGHT_COMMAND):
-                speedRight = STRAIGHT_RIGHT>>1;
-                speedLeft = -(STRAIGHT_LEFT>>1);
-                state = DRIVE;
-                driveTime = currCommand.duration << TURN_CONSTANT;
-                break;
-
-            case (LEFT_COMMAND):
-                speedRight = -(STRAIGHT_RIGHT>>1);
-                speedLeft = STRAIGHT_LEFT>>1;
-                state = DRIVE;
-                driveTime = currCommand.duration << TURN_CONSTANT;
-                break;
-
-            case (LINEFOLLOW_COMMAND):
-                state = STRAIGHT;
-                speedRight = currCommand.duration;
-                break;
-                
-            case (DISPLAY_NUMBER_COMMAND):
-              commandDisplayCounter = DISPLAY_ARRIVAL_STATE;
-                currentStation = currCommand.duration;
-                break;
-
-            case (EXIT_COMMAND):
-                state = WAIT;
-                nextState = EXIT;
-                speedRight = currCommand.duration;
-                break;
-        }
     }
 
 }

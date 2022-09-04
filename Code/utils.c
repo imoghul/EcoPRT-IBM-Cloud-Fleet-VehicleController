@@ -31,7 +31,7 @@ char* subStringPos(const char* str, char * subString) {
         }
 
         if (exists) {
-          return (char*)(str + i);
+            return (char*)(str + i);
         }
     }
 
@@ -79,30 +79,6 @@ void HEXtoBCD(int hex_value, int line, int start) {
     }
 
     display_line[line][start + 3] = hex_value + '0';
-
-    /*while(hex_value > 999) {
-        hex_value -= 1000;
-        value += 1;
-    }
-
-    display_line[line][start] = 0x30 + value;
-    value = 0;
-
-    while(hex_value > 99) {
-        hex_value -= 100;
-        value += 1;
-    }
-
-    display_line[line][start + 1] = 0x30 + value;
-    value = 0;
-
-    while(hex_value > 9) {
-        hex_value -= 10;
-        value += 1;
-    }
-
-    display_line[line][start + 2] = 0x30 + value;
-    display_line[line][start + 3] = 0x30 + hex_value;*/
 
 }
 
