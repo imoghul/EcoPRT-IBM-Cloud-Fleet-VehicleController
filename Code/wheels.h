@@ -25,8 +25,8 @@
 // detectors
 #define LEFT_BLACK_DETECT       (13)
 #define RIGHT_BLACK_DETECT      (13)
-#define LEFT_GRAY_DETECT        (8)
-#define RIGHT_GRAY_DETECT       (8)
+#define LEFT_GRAY_DETECT        (10)
+#define RIGHT_GRAY_DETECT       (10)
 #define LEFT_WHITE_DETECT       (4)//(LWDetect+2)
 #define RIGHT_WHITE_DETECT      (4)//(RWDetect+2)
 #define MS_PER_TICK             (4)

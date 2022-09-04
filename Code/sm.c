@@ -39,86 +39,92 @@ extern short l_LessBlack, l_LessGray, l_LessWhite, r_LessBlack, r_LessGray, r_Le
 int speedRight, speedLeft;
 unsigned int driveTime;
 
+void LineFollow(char direction)
+{
 
-
-void LineFollow(char direction) {
-   
     int rFollowSpeed, lFollowSpeed;
 
-   
-    
+    switch (stateCounter)
+    {
+    case 0:
+        EMITTER_ON;
+        display_changed = 1;
 
-    switch(stateCounter) {
-        case 0:
-            EMITTER_ON;
-            display_changed = 1;
+        if (rightSwitchable && leftSwitchable)
+            stateCounter++;
+        else
+            return;
 
-            if(rightSwitchable && leftSwitchable)stateCounter++;
-            else return;
+        break;
 
-            break;
-
-        case 1:
-          if(ADC_Left_Detect<=LEFT_WHITE_DETECT && ADC_Right_Detect<=RIGHT_WHITE_DETECT) {
+    case 1:
+        if (ADC_Left_Detect <= LEFT_WHITE_DETECT && ADC_Right_Detect <= RIGHT_WHITE_DETECT)
+        {
             stateCounter = 2;
             break;
-          }
-            if(ADC_Left_Detect<=LEFT_GRAY_DETECT && ADC_Right_Detect<=RIGHT_GRAY_DETECT) {
-              rFollowSpeed = lFollowSpeed = 3000;
-              ClearPIDController(&leftFollowController);
-              ClearPIDController(&leftFollowController);
-            }
-            else{
-               rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2800, GetOutput(&leftFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
-   
-               lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2800, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect));// swapped b/c they are physically swapped
-            }
-          
-            if(rFollowSpeed >= 10000 && lFollowSpeed>=10000)rFollowSpeed = lFollowSpeed = 3000;;
-          
-            Drive_Path(rFollowSpeed, lFollowSpeed, 0);
-            
-            break;
-        
-        case 2:
-            rFollowSpeed = lFollowSpeed = -2800;
-            Drive_Path(rFollowSpeed, lFollowSpeed, 0);  
-            if(ADC_Left_Detect>LEFT_WHITE_DETECT && ADC_Right_Detect>RIGHT_WHITE_DETECT) stateCounter = 1;
-            
+        }
+        if ((ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT)||(ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT))
+        {
+            rFollowSpeed = lFollowSpeed = 3000;
             ClearPIDController(&leftFollowController);
             ClearPIDController(&leftFollowController);
-            break;
-        case 3:
-            ShutoffMotors();
-            stateCounter = 0 ;
-            state = START;
-            EMITTER_OFF;
-            break;
-    }
+        }
+        else
+        {
+            rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2000, GetOutput(&leftFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
 
+            lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2000, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect)); // swapped b/c they are physically swapped
+        }
+
+        if (rFollowSpeed >= 8500 && lFollowSpeed >= 8500)
+            rFollowSpeed = lFollowSpeed = 3000;
+        
+
+        Drive_Path(rFollowSpeed, lFollowSpeed, 0);
+
+        break;
+
+    case 2:
+        rFollowSpeed = lFollowSpeed = -3800;
+        Drive_Path(rFollowSpeed, lFollowSpeed, 0);
+        if (ADC_Left_Detect > LEFT_WHITE_DETECT && ADC_Right_Detect > RIGHT_WHITE_DETECT)
+            stateCounter = 1;
+
+        ClearPIDController(&leftFollowController);
+        ClearPIDController(&leftFollowController);
+        break;
+    case 3:
+        ShutoffMotors();
+        stateCounter = 0;
+        state = START;
+        EMITTER_OFF;
+        break;
+    }
 }
 
-void StateMachine(void) {
+void StateMachine(void)
+{
     updateDetectors();
-    
-    HEXtoBCD(ADC_Left_Detect,3,6);
-            HEXtoBCD(ADC_Right_Detect,3,0);
-            display_changed = 1;
 
-    switch(state) {
+    HEXtoBCD(ADC_Left_Detect, 3, 6);
+    HEXtoBCD(ADC_Right_Detect, 3, 0);
+    display_changed = 1;
 
-        case (START):
-          ShutoffMotors();
-            break;
-        
-        case (LINEFOLLOW):
-            LineFollow(speedRight);
-            break;
-       
-        case (DONE):
-            break;
+    switch (state)
+    {
 
-        default:
-            break;
+    case (START):
+        ShutoffMotors();
+        break;
+
+    case (LINEFOLLOW):
+        LineFollow(speedRight);
+        break;
+
+    case (DONE):
+        break;
+
+    default:
+        break;
     }
 }
