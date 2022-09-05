@@ -23,14 +23,14 @@
 // turn
 #define TURN90                  (460)
 // detectors
-#define LEFT_BLACK_DETECT       (30)
-#define RIGHT_BLACK_DETECT      (30)
-#define LEFT_GRAY_DETECT        (10)
-#define RIGHT_GRAY_DETECT       (10)
-#define LEFT_WHITE_DETECT       (4)//(LWDetect+2)
-#define RIGHT_WHITE_DETECT      (4)//(RWDetect+2)
+#define LEFT_BLACK_DETECT       (5)
+#define RIGHT_BLACK_DETECT      (5)
+#define LEFT_GRAY_DETECT        (4)
+#define RIGHT_GRAY_DETECT       (4)
+#define LEFT_WHITE_DETECT       (2)//(LWDetect+2)
+#define RIGHT_WHITE_DETECT      (2)//(RWDetect+2)
 #define MS_PER_TICK             (4)
-#define LOCK_TIME               (150)
+#define LOCK_TIME               (100)
 
 int RunRightMotor( int val);
 int RunLeftMotor( int val);

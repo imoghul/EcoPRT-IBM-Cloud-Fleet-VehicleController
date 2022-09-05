@@ -25,22 +25,24 @@ extern int leftVals[VALUES_TO_HOLD];
 extern int rightVals[VALUES_TO_HOLD];
 
 
-PIDController rightFollowController = {
-    .kP = 6,// /16
-    .kD = 2000,// /8
-    //.kI = 0,
-    .error = 0,
-    .lastError = 0
-    //.lastIntegral = 0
-};
 PIDController leftFollowController = {
-    .kP = 6,// /16
-    .kD = 1000,// /8
+    .kP = 12,// /16
+    .kD = 10000,// /8
     //.kI = 0,
     .error = 0,
     .lastError = 0
     //.lastIntegral = 0
 };
+
+PIDController rightFollowController = {
+    .kP = 12,// /16
+    .kD = 10000,// /8
+    //.kI = 0,
+    .error = 0,
+    .lastError = 0
+    //.lastIntegral = 0
+};
+
 
 
 void ShutoffMotors(void) {

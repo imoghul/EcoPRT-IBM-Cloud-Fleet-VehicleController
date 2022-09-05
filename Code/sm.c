@@ -43,7 +43,8 @@ void LineFollow(char direction)
 {
 
     int rFollowSpeed, lFollowSpeed;
-
+    int rAdjustSpeed = (RIGHT_MIN - LF_TURN_DECREMENT);
+    int lAdjustSpeed = (LEFT_MIN - LF_TURN_DECREMENT);
     switch (stateCounter)
     {
     case 0:
@@ -62,55 +63,88 @@ void LineFollow(char direction)
         break;
 
     case 1:
-        if (ADC_Left_Detect <= LEFT_WHITE_DETECT && ADC_Right_Detect <= RIGHT_WHITE_DETECT)
-        {
-            stateCounter = 10;
-            break;
-        }
-        if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT)||(ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
-        {
-            rFollowSpeed = lFollowSpeed = 3000;
-            ClearPIDController(&leftFollowController);
-            ClearPIDController(&leftFollowController);
-        }
-        else
-        {
-            rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2500, GetOutput(&leftFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
-
-            lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2500, GetOutput(&rightFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect)); // swapped b/c they are physically swapped
-        }
+        // if (l_LessWhite ^ r_LessWhite)
+        // {
+        //     stateCounter = 10;
+        //     break;
+        // }
+        // if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT) || (ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
+        // {
+        //     rFollowSpeed = lFollowSpeed = 3000;
+        //     ClearPIDController(&leftFollowController);
+        //     ClearPIDController(&leftFollowController);
+        // }
+        // else
+        // {
+        //ADC_Right_Detect = 10;
+        lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2500, GetOutput(&leftFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect));  // swapped b/c they are physically swapped
+        rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2500, GetOutput(&rightFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
+        
+        
+        // rFollowSpeed = additionSafe(rFollowSpeed, RIGHT_MAX, 2500, -(lFollowSpeed>>2));
+        // lFollowSpeed = additionSafe(lFollowSpeed, LEFT_MAX, 2500, -(orig>>2));
+        // }
 
         if (rFollowSpeed >= 5000 && lFollowSpeed >= 5000)
-            rFollowSpeed = lFollowSpeed = 3000;
-        
-        HEXtoBCD(rFollowSpeed/100, 2, 6);
-        HEXtoBCD(lFollowSpeed/100, 2, 0);
+        {
+            rFollowSpeed = 3000;
+            lFollowSpeed = 3000;
+        }
+
+        // if (lessWhiteAnd)
+        // {
+        //     rFollowSpeed = -RIGHT_MIN >> 1;
+        //     lFollowSpeed = -LEFT_MIN >> 1;
+        // }
+
+        HEXtoBCD(rFollowSpeed / 100, 2, 6);
+        HEXtoBCD(lFollowSpeed / 100, 2, 0);
         Drive_Path(rFollowSpeed, lFollowSpeed, 0);
 
         break;
 
     case 2:
-        rFollowSpeed = lFollowSpeed = -3800;
-        HEXtoBCD(rFollowSpeed/100, 2, 6);
-        HEXtoBCD(lFollowSpeed/100, 2, 0);
-        Drive_Path(rFollowSpeed, lFollowSpeed, 0);
-        if (ADC_Left_Detect > LEFT_WHITE_DETECT && ADC_Right_Detect > RIGHT_WHITE_DETECT)
+        if (l_LessWhite && r_GreaterWhite)
+            stateCounter = 3;
+        else if (l_GreaterWhite && r_LessWhite)
+            stateCounter = 4;
+        else
             stateCounter = 1;
 
-        ClearPIDController(&leftFollowController);
-        ClearPIDController(&leftFollowController);
         break;
+
+    case 3: // turn left ()
+        if (l_LessWhite)
+            Drive_Path(rAdjustSpeed, -lAdjustSpeed, 0);
+        else if (greaterWhiteAnd)
+            stateCounter = 1;
+        else
+            stateCounter = 4;
+
+        break;
+
+    case 4:
+        if (r_LessWhite)
+            Drive_Path(-rAdjustSpeed, lAdjustSpeed, 0);
+        else if (greaterWhiteAnd)
+            stateCounter = 1;
+        else
+            stateCounter = 3;
+
+        break;
+
     case 10:
-      if(LockMotors(-1,-1)) stateCounter = 2;
-      break;
-    case 3:
+        if (LockMotorsTime(-1, -1, 1))
+            stateCounter = 2;
+
+        break;
+    case 5:
         ShutoffMotors();
         stateCounter = 0;
         state = START;
         EMITTER_OFF;
         break;
     }
-    
 }
 
 void StateMachine(void)

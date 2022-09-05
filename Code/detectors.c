@@ -9,11 +9,9 @@
 extern volatile unsigned char display_changed;
 extern char display_line[4][11];
 char movingDirection;
-int rightVals[VALUES_TO_HOLD];
 extern volatile unsigned int ADC_Left_Detect, ADC_Right_Detect;
 int lastLeft;
 int lastRight;
-int leftVals[VALUES_TO_HOLD];
 extern volatile unsigned int adcUpdated;
 extern volatile unsigned int calibrationMode;
 unsigned int LBDetect, LWDetect, RBDetect, RWDetect;
