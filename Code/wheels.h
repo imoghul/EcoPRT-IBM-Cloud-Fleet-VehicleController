@@ -23,10 +23,10 @@
 // turn
 #define TURN90                  (460)
 // detectors
-#define LEFT_BLACK_DETECT       (5)
-#define RIGHT_BLACK_DETECT      (5)
-#define LEFT_GRAY_DETECT        (4)
-#define RIGHT_GRAY_DETECT       (4)
+#define LEFT_BLACK_DETECT       (8)
+#define RIGHT_BLACK_DETECT      (6)
+#define LEFT_GRAY_DETECT        (3)
+#define RIGHT_GRAY_DETECT       (3)
 #define LEFT_WHITE_DETECT       (2)//(LWDetect+2)
 #define RIGHT_WHITE_DETECT      (2)//(RWDetect+2)
 #define MS_PER_TICK             (4)

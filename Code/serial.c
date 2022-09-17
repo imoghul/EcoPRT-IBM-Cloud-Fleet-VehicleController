@@ -181,7 +181,7 @@ void loadRingtoPB(volatile unsigned int* rx_wr, unsigned int* rx_rd, volatile ch
     if(*pb_buffered) return;
 
     if(*rx_wr != *rx_rd) {
-        Rx_Process[pb0_index] = Rx_Ring[*rx_rd];
+        Rx_Process[*pb_index] = Rx_Ring[*rx_rd];
 
         if(++(*rx_rd) > SMALL_RING_SIZE - 1) *rx_rd = BEGINNING;
 
@@ -195,9 +195,37 @@ void loadRingtoPB(volatile unsigned int* rx_wr, unsigned int* rx_rd, volatile ch
 }
 
 void loadRingtoPB_0(void) {
-    loadRingtoPB(&usb0_rx_wr, &usb0_rx_rd, USB0_Char_Rx_Process, USB0_Char_Rx_Ring, &pb0_index, &pb0_buffered);
+    // if(pb0_buffered) return;
+
+    // if(usb0_rx_wr != usb0_rx_rd) {
+    //     USB0_Char_Rx_Process[pb0_index] = USB0_Char_Rx_Ring[usb0_rx_rd];
+
+    //     if(++(usb0_rx_rd) > SMALL_RING_SIZE - 1) usb0_rx_rd = BEGINNING;
+
+    //     if(++(pb0_index) > LARGE_RING_SIZE - 1) pb0_index = BEGINNING;
+    // }
+
+    // if(pb0_index >= 2 && USB0_Char_Rx_Process[(pb0_index) - 1] == '\n' && USB0_Char_Rx_Process[(pb0_index) - 2] == '\r') {
+    //     pb0_buffered = 1;
+    //     pb0_index = BEGINNING;
+    // }
+  loadRingtoPB(&usb0_rx_wr, &usb0_rx_rd, USB0_Char_Rx_Process, USB0_Char_Rx_Ring, &pb0_index, &pb0_buffered);
 }
 void loadRingtoPB_1(void) {
+    // if(pb1_buffered) return;
+
+    // if(usb1_rx_wr != usb1_rx_rd) {
+    //     USB1_Char_Rx_Process[pb1_index] = USB1_Char_Rx_Ring[usb1_rx_rd];
+
+    //     if(++(usb1_rx_rd) > SMALL_RING_SIZE - 1) usb1_rx_rd = BEGINNING;
+
+    //     if(++(pb1_index) > LARGE_RING_SIZE - 1) pb1_index = BEGINNING;
+    // }
+
+    // if(pb1_index >= 2 && USB1_Char_Rx_Process[(pb1_index) - 1] == '\n' && USB1_Char_Rx_Process[(pb1_index) - 2] == '\r') {
+    //     pb1_buffered = 1;
+    //     pb1_index = BEGINNING;
+    // }
     loadRingtoPB(&usb1_rx_wr, &usb1_rx_rd, USB1_Char_Rx_Process, USB1_Char_Rx_Ring, &pb1_index, &pb1_buffered);
 }
 

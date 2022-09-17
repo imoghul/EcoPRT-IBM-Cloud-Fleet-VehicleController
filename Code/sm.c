@@ -63,27 +63,27 @@ void LineFollow(char direction)
         break;
 
     case 1:
-        // if (l_LessWhite ^ r_LessWhite)
-        // {
-        //     stateCounter = 10;
-        //     break;
-        // }
-        // if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT) || (ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
-        // {
-        //     rFollowSpeed = lFollowSpeed = 3000;
-        //     ClearPIDController(&leftFollowController);
-        //     ClearPIDController(&leftFollowController);
-        // }
-        // else
-        // {
-        //ADC_Right_Detect = 10;
+        if (l_LessWhite ^ r_LessWhite)
+        {
+            stateCounter = 10;
+            break;
+        }
+        if ((ADC_Left_Detect <= LEFT_GRAY_DETECT && ADC_Right_Detect <= RIGHT_GRAY_DETECT) || (ADC_Left_Detect > LEFT_BLACK_DETECT && ADC_Right_Detect > RIGHT_BLACK_DETECT))
+        {
+            rFollowSpeed = lFollowSpeed = 3000;
+            ClearPIDController(&leftFollowController);
+            ClearPIDController(&leftFollowController);
+        }
+        else
+        {
+        // ADC_Right_Detect = 10;
         lFollowSpeed = additionSafe(LEFT_FORWARD_SPEED, LEFT_MAX, 2500, GetOutput(&leftFollowController, RIGHT_BLACK_DETECT, ADC_Right_Detect));  // swapped b/c they are physically swapped
         rFollowSpeed = additionSafe(RIGHT_FORWARD_SPEED, RIGHT_MAX, 2500, GetOutput(&rightFollowController, LEFT_BLACK_DETECT, ADC_Left_Detect)); // swapped b/c they are physically swapped
         
         
         // rFollowSpeed = additionSafe(rFollowSpeed, RIGHT_MAX, 2500, -(lFollowSpeed>>2));
         // lFollowSpeed = additionSafe(lFollowSpeed, LEFT_MAX, 2500, -(orig>>2));
-        // }
+        }
 
         if (rFollowSpeed >= 5000 && lFollowSpeed >= 5000)
         {
@@ -91,11 +91,11 @@ void LineFollow(char direction)
             lFollowSpeed = 3000;
         }
 
-        // if (lessWhiteAnd)
-        // {
-        //     rFollowSpeed = -RIGHT_MIN >> 1;
-        //     lFollowSpeed = -LEFT_MIN >> 1;
-        // }
+        if (lessWhiteAnd)
+        {
+            rFollowSpeed = -RIGHT_MIN >> 1;
+            lFollowSpeed = -LEFT_MIN >> 1;
+        }
 
         HEXtoBCD(rFollowSpeed / 100, 2, 6);
         HEXtoBCD(lFollowSpeed / 100, 2, 0);

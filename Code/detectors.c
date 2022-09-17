@@ -47,21 +47,3 @@ void updateDetectors(void) {
     greaterWhiteAnd = l_GreaterWhite && r_GreaterWhite;
     greaterWhiteOr = l_GreaterWhite || r_GreaterWhite;
 }
-
-void calibrate(void) {
-    int left = ADC_Left_Detect, right = ADC_Right_Detect;
-    unsigned int * leftDetect = calibrationMode ? &LWDetect : &LBDetect;
-    unsigned int * rightDetect = calibrationMode ? &RWDetect : &RBDetect;
-
-    if (left > *leftDetect) *leftDetect = left;
-
-    if (right > *rightDetect) *rightDetect = right;
-
-    HEXtoBCD((int)LBDetect, (int)3, (int)6);
-    HEXtoBCD((int)RBDetect, (int)3, (int)0);
-    HEXtoBCD((int)LWDetect, (int)2, (int)6);
-    HEXtoBCD((int)RWDetect, (int)2, (int)0);
-    HEXtoBCD((int)left, (int)0, (int)6);
-    HEXtoBCD((int)right, (int)0, (int)0);
-    display_changed = 1;
-}
